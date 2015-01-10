@@ -18,7 +18,10 @@
             dbPort: 5432,
             dbName:'loyally',
             dbUserName:'postgres',
-            dbPassword:'postgres'
+            dbPassword:'postgres',
+            processorPath: path.join(rootPath, 'config/processorDefinition'),
+            ruleSetPath: path.join(rootPath, 'config/ruleSetDefinition'),
+            rulePath: path.join(rootPath, 'config/ruleDefinition')
         },
         production: {
             rootPath: rootPath,
@@ -29,7 +32,10 @@
             dbPort: 5432,
             dbName:'loyally',
             dbUserName:'postgres',
-            dbPassword:'postgres'
+            dbPassword:'postgres',
+            processorPath: path.join(rootPath, 'config/processorDefinition'),
+            ruleSetPath: path.join(rootPath, 'config/ruleSetDefinition'),
+            rulePath: path.join(rootPath, 'config/ruleDefinition')
         }
     }
 })(require('path'));

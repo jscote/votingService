@@ -4,6 +4,8 @@
 var cluster = require('cluster');
 var numCpus = require('os').cpus().length;
 var queue = require('jsai-queuing');
+var processor = require('jsai-jobprocessor');
+var rules = require('jsai-ruleengine');
 
 
 //Configure environment
@@ -28,6 +30,11 @@ require('./config/routes')(app);
 var queueConfig = require('./config/queue');
 queue.setup(queueConfig);
 
+//Configure JobProcessors
+processor.Processor.config(config);
+
+//Configure RuleEngine
+rules.RuleEngine.config(config);
 
 var startListening = function (server) {
     server.listen(config.port, host, function () {
