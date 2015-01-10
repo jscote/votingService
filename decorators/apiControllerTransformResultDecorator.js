@@ -11,7 +11,7 @@
 
             return function () {
                 var args = [].slice.call(arguments);
-                var promise = delegateFn.apply(delegateClass, args);
+                var promise = q.fcall(delegateFn.bind(delegateClass), args);
                 var defaultStatusCode = '200';
                 var defaultErrorStatusCode = '400';
 

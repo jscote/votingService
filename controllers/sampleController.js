@@ -33,9 +33,8 @@
     SampleController.prototype.index = function (request) {
 
         var dfd = q.defer();
-        this.customerService.getCustomers().then(function (result) {
-            dfd.resolve(httpApiResponse.createHttpApiResponse('200', result.data));
-        });
+
+        dfd.resolve(httpApiResponse.createHttpApiResponse('200', {"someData" : "someData"}));
 
         return dfd.promise;
     };
@@ -62,6 +61,11 @@
 
         return dfd.promise;
     };
+
+    SampleController.prototype.create = function(request) {
+
+        return {"someOtherInsertion" : "someOtherInsertion"};
+    }
 
 
     module.exports = SampleController;
