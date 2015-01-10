@@ -47,7 +47,7 @@
                 }
 
                 if (!isAuthRequired || hasPermission) {
-                    dfd.resolve(q.fcall(delegateFn.bind(delegateClass), args));
+                    dfd.resolve(q.fapply(delegateFn.bind(delegateClass), args));
                 } else {
                     dfd.resolve(httpApiResponse.createHttpApiResponse('401', {"error": 'Not Authorized'}));
                 }

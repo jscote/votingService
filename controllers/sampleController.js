@@ -31,12 +31,7 @@
         [new noAuthAnnotation()];
 
     SampleController.prototype.index = function (request) {
-
-        var dfd = q.defer();
-
-        dfd.resolve(httpApiResponse.createHttpApiResponse('200', {"someData" : "someData"}));
-
-        return dfd.promise;
+        return {"someData" : "someData"};
     };
 
     SampleController.prototype.index.annotations =
@@ -47,7 +42,7 @@
         //This demonstrate that if we want, we can return an object that has the shape of what the route handler is expecting
         //That would allow having more control on the status code when needed
 
-        var message = new this.messaging.ServiceMessage({data: {customerId: request.params.customer}});
+        var message = new this.messaging.ServiceMessage({data: {id: request.params.example}});
         var dfd = q.defer();
 
         //TODO - Handle exception better
@@ -65,7 +60,7 @@
     SampleController.prototype.create = function(request) {
 
         return {"someOtherInsertion" : "someOtherInsertion"};
-    }
+    };
 
 
     module.exports = SampleController;

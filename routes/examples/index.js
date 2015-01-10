@@ -32,12 +32,19 @@
 
         };
 
+        var create = function (request, response) {
+            controller.create(request).then(function (result) {
+                response.status(result.statusCode).send(result.data);
+            });
+
+        };
 
         return baseRoute.createRoutes({
             all: all,
             index: index,
             show: get,
-            edit: get
+            edit: get,
+            create: create
         });
 
     })();
