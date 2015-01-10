@@ -36,7 +36,7 @@ var lodash = require('lodash');
 
         return _.map(
             _.filter(typeAnnotations, function (item) {
-                return item instanceof type
+                return item instanceof type;
             }), mapFunction);
     }
 
@@ -65,7 +65,7 @@ var lodash = require('lodash');
 
         return _.map(
             _.filter(fnAnnotations, function (item) {
-                return item instanceof type
+                return item instanceof type;
             }), mapFunction);
     }
 

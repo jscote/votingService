@@ -18,7 +18,7 @@
         var index = function (request, response) {
             if(controller.index) {
                 controller.index(request).then(function (result) {
-                    response.send(result.statusCode, result.data);
+                    response.status(result.statusCode).send(result.data);
                 })
             } else {
                 response.send('405');
@@ -27,7 +27,7 @@
 
         var get = function (request, response) {
             controller.get(request).then(function (result) {
-                response.send(result.statusCode, result.data);
+                response.status(result.statusCode).send(result.data);
             });
 
         };

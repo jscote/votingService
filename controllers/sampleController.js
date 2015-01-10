@@ -5,7 +5,7 @@
  * Created by jscote on 10/20/13.
  */
 
-(function (util, base, Permission, PermissionAnnotation, permissionEnum, httpApiResponse, q) {
+(function (util, base, Permission, PermissionAnnotation, noAuthAnnotation, permissionEnum, httpApiResponse, q) {
 
     'use strict';
 
@@ -22,10 +22,13 @@
     util.inherits(SampleController, base);
 
 
-    SampleController.prototype.annotations =
+    /*SampleController.prototype.annotations =
         [new PermissionAnnotation()
             .addRequiredPermission(new Permission(permissionEnum().CanLogin))
-        ];
+        ];*/
+
+    SampleController.prototype.annotations =
+        [new noAuthAnnotation()];
 
     SampleController.prototype.index = function (request) {
 
@@ -67,6 +70,7 @@
     require(Injector.getBasePath() + '/controllers/permissionApiController'),
     require(Injector.getBasePath() + '/security/permissions'),
     require(Injector.getBasePath() + '/security/permissionAnnotation'),
+    require(Injector.getBasePath() + '/security/noAuthRequiredAnnotation'),
     require(Injector.getBasePath() + '/security/permissionEnum'),
     require(Injector.getBasePath() + '/helpers/httpApiResponse'),
     require('q')

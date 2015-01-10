@@ -6,6 +6,7 @@
     'use strict';
 
     function NoAuthRequiredAnnotation() {
+        return this;
     }
 
     module.exports = NoAuthRequiredAnnotation;

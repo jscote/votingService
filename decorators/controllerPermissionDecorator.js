@@ -61,7 +61,7 @@
         require(Injector.getBasePath() + '/helpers/permissionHelper'),
         require(Injector.getBasePath() + '/security/permissionEnum'),
         require(Injector.getBasePath() + '/helpers/annotationHelper'),
-        require(Injector.getBasePath() + '/security/NoAuthRequiredAnnotation'),
+        require(Injector.getBasePath() + '/security/noAuthRequiredAnnotation'),
         require(Injector.getBasePath() + '/helpers/httpApiResponse'),
         require(Injector.getBasePath() + '/controllers/baseController'),
         require('q')
