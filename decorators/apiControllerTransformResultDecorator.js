@@ -38,7 +38,7 @@
                     var response = {};
                     if (result instanceof messaging.ServiceResponse) {
                         if (result.isSuccess) {
-                            response = httpApiResponse.createHttpApiResponse(defaultStatusCode, result.data);
+                            response = httpApiResponse.createHttpApiResponse(defaultStatusCode, result.toJSON());
                         }
                         else {
                             response = httpApiResponse.createHttpApiResponse(defaultErrorStatusCode, result.errors);

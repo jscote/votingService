@@ -5,7 +5,7 @@
  * Created by jscote on 10/20/13.
  */
 
-(function (util, base, Permission, PermissionAnnotation, noAuthAnnotation, permissionEnum, httpApiResponse, q) {
+(function (util, base, Permission, PermissionAnnotation, noAuthAnnotation, permissionEnum, httpApiResponse, q, queue) {
 
     'use strict';
 
@@ -57,11 +57,16 @@
         return dfd.promise;
     };
 
+
+
     SampleController.prototype.create = function(request) {
 
-        return {"someOtherInsertion" : "someOtherInsertion"};
-    };
+        var msg = {"someOtherInsertion" : "someOtherInsertion"};
+        var response = queue.send('CustomerUpdate', msg);
 
+        return response;
+    };
+    SampleController.prototype.create.annotations = [new httpApiResponse.HttpStatusCode(201)];
 
     module.exports = SampleController;
 
@@ -72,6 +77,7 @@
     require(Injector.getBasePath() + '/security/noAuthRequiredAnnotation'),
     require(Injector.getBasePath() + '/security/permissionEnum'),
     require(Injector.getBasePath() + '/helpers/httpApiResponse'),
-    require('q')
+    require('q'),
+    require('jsai-queuing')
 );
 
