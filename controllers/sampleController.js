@@ -61,12 +61,21 @@
 
     SampleController.prototype.create = function(request) {
 
-        var msg = {"someOtherInsertion" : "someOtherInsertion"};
+        var msg = {example: 1};
+        var response = queue.send('CustomerCreation', msg);
+
+        return response;
+    };
+    SampleController.prototype.create.annotations = [new httpApiResponse.HttpStatusCode(202)];
+
+    SampleController.prototype.update = function(request) {
+
+        var msg = {example: 1};
         var response = queue.send('CustomerUpdate', msg);
 
         return response;
     };
-    SampleController.prototype.create.annotations = [new httpApiResponse.HttpStatusCode(201)];
+    SampleController.prototype.update.annotations = [new httpApiResponse.HttpStatusCode(202)];
 
     module.exports = SampleController;
 

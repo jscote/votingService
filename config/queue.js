@@ -1,7 +1,7 @@
 /**
  * Created by jean-sebastiencote on 1/3/15.
  */
-(function (jobProcessor) {
+(function (jobProcessor, q) {
 
     'use strict';
 
@@ -12,20 +12,16 @@
         },
         types: [
             {
-                type: 'CustomerUpdate', pattern: 'topic', listener: function (msg) {
-                console.log("inner function");
-                console.log(msg);
-
-                jobProcessor.Processor.getProcessor('CustomerUpdate').then(function (processor) {
-                    processor.execute(msg);
-                }).fail(function (error) {
-                    //Put the message under an error queue
-                });
-            }
+                type: 'CustomerUpdate', pattern: 'topic',
+                mapToProcessor: true
+            },
+            {
+                type: 'CustomerCreation', pattern: 'topic',
+                mapToProcessor: true
             },
             {type: 'CustomerUpdated', pattern: 'fanout', listener: ''},
             {type: 'CustomerCreated', pattern: 'fanout', listener: ''}
         ]
     };
 
-})(require('jsai-jobprocessor'));
+})(require('jsai-jobprocessor'), require('q'));

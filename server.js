@@ -7,7 +7,6 @@ var queue = require('jsai-queuing');
 var processor = require('jsai-jobprocessor');
 var rules = require('jsai-ruleengine');
 
-
 //Configure environment
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -28,11 +27,13 @@ require('./config/routes')(app);
 
 //Configure Queues
 var queueConfig = require('./config/queue');
+//wrap listeners for queues to map to processors
+require('./helpers/queueToProcessorWrapper')(queueConfig);
+
 queue.setup(queueConfig);
 
 //Configure JobProcessors
 processor.Processor.config(config);
-processor.Processor.getProcessor('CustomerUpdate').then(function(p) {console.log('processor loaded')}).fail(function(error) {console.log(error)});
 
 //Configure RuleEngine
 rules.RuleEngine.config(config);

@@ -39,12 +39,20 @@
 
         };
 
+        var update = function (request, response) {
+            controller.update(request).then(function (result) {
+                response.status(result.statusCode).send(result.data);
+            });
+
+        };
+
         return baseRoute.createRoutes({
             all: all,
             index: index,
             show: get,
             edit: get,
-            create: create
+            create: create,
+            update: update
         });
 
     })();
