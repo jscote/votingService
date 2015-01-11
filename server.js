@@ -32,6 +32,7 @@ queue.setup(queueConfig);
 
 //Configure JobProcessors
 processor.Processor.config(config);
+processor.Processor.getProcessor('CustomerUpdate').then(function(p) {console.log('processor loaded')}).fail(function(error) {console.log(error)});
 
 //Configure RuleEngine
 rules.RuleEngine.config(config);
