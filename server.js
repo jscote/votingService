@@ -28,7 +28,7 @@ require('./config/routes')(app);
 //Configure Queues
 var queueConfig = require('./config/queue');
 //wrap listeners for queues to map to processors
-require('./helpers/queueToProcessorWrapper')(queueConfig);
+require('jsai-queuetoprocessor')(queueConfig);
 
 queue.setup(queueConfig);
 
