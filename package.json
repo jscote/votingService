@@ -6,24 +6,24 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "~1.8.1",
+    "body-parser": "^1.10.2",
     "cookie-parser": "~1.3.3",
-    "debug": "~2.0.0",
-    "ejs": "~0.8.5",
-    "express": "~4.9.0",
+    "debug": "^2.1.1",
+    "ejs": "^0.8.8",
+    "express": "^4.11.1",
     "express-resource-new": "^0.1.1",
-    "express-session": "^1.9.3",
+    "express-session": "^1.10.1",
     "jsai-injector": "0.0.2",
-    "jsai-jobprocessor": "0.0.11",
-    "jsai-queuetoprocessor": "0.0.1",
-    "jsai-queuing": "0.0.11",
+    "jsai-jobprocessor": "^0.0.12",
+    "jsai-queuetoprocessor": "0.0.3",
+    "jsai-queuing": "0.0.12",
     "jsai-ruleengine": "0.0.5",
-    "jsai-servicemessage": "0.0.6",
+    "jsai-servicemessage": "0.0.8",
     "lodash": "^2.4.1",
-    "morgan": "~1.3.0",
+    "morgan": "^1.5.1",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "q": "^1.1.2",
-    "serve-favicon": "~2.1.3"
+    "serve-favicon": "^2.2.0"
   }
 }

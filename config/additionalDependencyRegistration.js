@@ -7,8 +7,9 @@
 
     module.exports = function() {
         //add additional dependency registration here.
-        Injector.register({dependency: '/controllers/SampleController', name: 'sampleController', resolutionName: '/:id/examples/:example?/:op?'})
         Injector
+            .register({dependency: '/controllers/SampleController', name: 'sampleController', resolutionName: '/:id/examples/:example.:format?'})
+            .register({dependency: '/controllers/SampleController', name: 'sampleController', resolutionName: '/:id/examples.:format?'})
             .register({dependency: '/processorTasks/TestClasses::TestTaskNode', name: 'TestTaskNode'})
             .register({dependency: '/processorTasks/TestClasses::Test2TaskNode', name: 'Test2TaskNode'})
             .register({dependency: '/processorTasks/TestClasses::Test3TaskNode', name: 'Test3TaskNode'})

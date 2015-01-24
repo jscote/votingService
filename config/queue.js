@@ -1,7 +1,7 @@
 /**
  * Created by jean-sebastiencote on 1/3/15.
  */
-(function (jobProcessor, q) {
+(function () {
 
     'use strict';
 
@@ -24,4 +24,4 @@
         ]
     };
 
-})(require('jsai-jobprocessor'), require('q'));
+})();

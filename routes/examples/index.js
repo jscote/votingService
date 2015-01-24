@@ -8,14 +8,10 @@
 
     module.exports = (function sampleRouteHandler() {
         var targetController = 'sampleController';
-        var controller = null;
 
-        var all = function (request, response, next) {
-            controller = controllerResolver.getController({targetController: targetController, parameters: request});
-            next();
-        };
 
         var index = function (request, response) {
+            var controller = controllerResolver.getController({targetController: targetController, parameters: request});
             if(controller.index) {
                 controller.index(request).then(function (result) {
                     response.status(result.statusCode).send(result.data);
@@ -26,6 +22,7 @@
         };
 
         var get = function (request, response) {
+            var controller = controllerResolver.getController({targetController: targetController, parameters: request});
             controller.get(request).then(function (result) {
                 response.status(result.statusCode).send(result.data);
             });
@@ -33,6 +30,7 @@
         };
 
         var create = function (request, response) {
+            var controller = controllerResolver.getController({targetController: targetController, parameters: request});
             controller.create(request).then(function (result) {
                 response.status(result.statusCode).send(result.data);
             });
@@ -40,6 +38,7 @@
         };
 
         var update = function (request, response) {
+            var controller = controllerResolver.getController({targetController: targetController, parameters: request});
             controller.update(request).then(function (result) {
                 response.status(result.statusCode).send(result.data);
             });
@@ -47,7 +46,6 @@
         };
 
         return baseRoute.createRoutes({
-            all: all,
             index: index,
             show: get,
             edit: get,
