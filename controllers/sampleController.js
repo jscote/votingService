@@ -70,8 +70,16 @@
 
     SampleController.prototype.update = function(request) {
 
-        var msg = {example: 1};
-        var response = queue.send('CustomerUpdate', msg);
+        var msg = new this.messaging.ServiceMessage({data: {example: 1}});
+
+        var queueResponse = queue.send('CustomerUpdate', msg);
+
+        var response = msg.createServiceResponseFrom();
+        if(!queueResponse.isSuccess) {
+            queueResponse.errors.forEach(function(item) {
+                response.addError(item);
+            });
+        }
 
         return response;
     };
