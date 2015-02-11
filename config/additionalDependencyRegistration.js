@@ -16,6 +16,7 @@
             .register({dependency: '/processorTasks/TestClasses::Test4TaskNode', name: 'Test4TaskNode'})
             .register({dependency: '/processorTasks/TestClasses::TestLoopTaskNode', name: 'TestLoopTaskNode'})
             .register({dependency: '/processorTasks/TestClasses::Test2LoopTaskNode', name: 'Test2LoopTaskNode'})
+            .register({dependency: '/processorTasks/TestClasses::ConsoleLogNode', name: 'ConsoleLogNode'})
             .register({dependency: '/processorTasks/TestClasses::TestRequestCancellationTaskNode', name: 'TestRequestCancellationTaskNode'})
             .register({
                 dependency: '/processorTasks/TestClasses::TestPredecessorToLoopTaskNode',

@@ -274,6 +274,27 @@
 
     };
 
+    function ConsoleLogNode(serviceMessage) {
+        base.TaskNode.call(this, serviceMessage);
+        this.name = 'ConsoleLogNode';
+    }
+
+    util.inherits(ConsoleLogNode, base.TaskNode);
+
+    ConsoleLogNode.prototype.handleRequest = function (context) {
+
+        var self = this;
+        var dfd = q.defer();
+
+        process.nextTick(function () {
+            console.log("This is the interval" + context.request.data.interval);
+            return dfd.resolve(context);
+        });
+
+        return dfd.promise;
+
+    };
+
 
     module.exports.TestTaskNode = TestTaskNode;
     module.exports.Test2TaskNode = Test2TaskNode;
@@ -285,6 +306,7 @@
     module.exports.TestSuccessorToLoopTaskNode = TestSuccessorToLoopTaskNode;
     module.exports.TestCompensationToLoopTaskNode = TestCompensationToLoopTaskNode;
     module.exports.TestRequestCancellationTaskNode = TestRequestCancellationTaskNode;
+    module.exports.ConsoleLogNode = ConsoleLogNode;
 
 
 
