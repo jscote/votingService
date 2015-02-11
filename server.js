@@ -38,6 +38,12 @@ processor.Processor.config(config);
 //Configure RuleEngine
 rules.RuleEngine.config(config);
 
+//Configure ServiceMessages Persistence
+require('jsai-servicemessage-persistence').Configuration(config.serviceMessage);
+
+//Configure identifer module
+require('jsai-identifier').Configuration(config.identifiers);
+
 var startListening = function (server) {
     server.listen(config.port, host, function () {
         console.log(
