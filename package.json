@@ -15,6 +15,7 @@
     "express-session": "^1.10.2",
     "jsai-identifier": "0.0.1",
     "jsai-injector": "0.0.2",
+    "jsai-interval-jobprocessor": "0.0.1",
     "jsai-jobprocessor": "0.0.15",
     "jsai-queuetoprocessor": "0.0.7",
     "jsai-queuing": "~0.0.14",

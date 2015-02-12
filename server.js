@@ -45,21 +45,7 @@ require('jsai-servicemessage-persistence').Configuration(config.serviceMessage);
 require('jsai-identifier').Configuration(config.identifiers);
 
 //Configure intervals for processor
-var serviceMessage = require('jsai-servicemessage');
-var intervalConfigs = require('./config/scheduledProcessors');
-var intervals = {};
-for (var iIdx = 0; iIdx < intervalConfigs.schedules.length; iIdx++) {
-    (function (schedule) {
-        intervals[schedule.alias] = setInterval(function () {
-            processor.Processor.getProcessor(schedule.processorName).then(function(processor) {
-                var request = new serviceMessage.ServiceMessage();
-                request.data = {interval: schedule.interval};
-
-                processor.execute(request);
-            });
-        }, schedule.interval);
-    })(intervalConfigs.schedules[iIdx]);
-}
+require('jsai-interval-jobprocessor').Configure(require('./config/scheduledProcessors'));
 
 var startListening = function (server) {
     server.listen(config.port, host, function () {
