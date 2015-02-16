@@ -1,17 +1,17 @@
 /**
  * Created by jean-sebastiencote on 1/3/15.
  */
-(function(){
+(function () {
 
     'use strict';
 
-    module.exports = function(app) {
+    module.exports = function (app) {
 
         app.resource('api', function () {
-            this.resource('voters');
-            this.resource('votingDescriptorTypes', function() {
+            this.resource('votes', function () {
+                this.resource('votingDescriptors');
                 this.resource('voters');
-            });
+            })
         });
 
         // catch 404 and forward to error handler

@@ -9,47 +9,39 @@
         //add additional dependency registration here.
         Injector
             .register({
-                dependency: '/controllers/votingDescriptorTypesController',
-                name: 'votingDescriptorTypesController',
-                resolutionName: '/:id/votingDescriptorTypes/:votingDescriptorType.:format?'
+                dependency: '/helpers/voteStrategyResolver',
+                name: 'strategyResolver',
+                resolutionName: 'paramsVotersController'
             })
             .register({
-                dependency: '/controllers/votingDescriptorTypesController',
-                name: 'votingDescriptorTypesController',
-                resolutionName: '/:id/votingDescriptorTypes.:format?'
+                dependency: '/controllers/allVotingDescriptorsController',
+                name: 'votingDescriptorsController',
+                resolutionName: '/:id/votes/:vote/votingDescriptors/:votingDescriptor.:format?|vote:all'
             })
             .register({
-                dependency: '/controllers/votersController',
+                dependency: '/controllers/remainingVotingDescriptorsController',
+                name: 'votingDescriptorsController',
+                resolutionName: '/:id/votes/:vote/votingDescriptors/:votingDescriptor.:format?|vote:remaining'
+            })
+            .register({
+                dependency: '/controllers/allVotersController',
                 name: 'votersController',
-                resolutionName: '/:id/votingDescriptorTypes/:votingDescriptorType/voters.:format?'
+                resolutionName: '/:id/votes/:vote/voters.:format?|vote:all'
             })
             .register({
-                dependency: '/controllers/votersController',
+                dependency: '/controllers/remainingVotersController',
                 name: 'votersController',
-                resolutionName: '/:id/votingDescriptorTypes/:votingDescriptorType/voters/:voter.:format?'
-            })
-            .register({dependency: '/processorTasks/TestClasses::TestTaskNode', name: 'TestTaskNode'})
-            .register({dependency: '/processorTasks/TestClasses::Test2TaskNode', name: 'Test2TaskNode'})
-            .register({dependency: '/processorTasks/TestClasses::Test3TaskNode', name: 'Test3TaskNode'})
-            .register({dependency: '/processorTasks/TestClasses::Test4TaskNode', name: 'Test4TaskNode'})
-            .register({dependency: '/processorTasks/TestClasses::TestLoopTaskNode', name: 'TestLoopTaskNode'})
-            .register({dependency: '/processorTasks/TestClasses::Test2LoopTaskNode', name: 'Test2LoopTaskNode'})
-            .register({dependency: '/processorTasks/TestClasses::ConsoleLogNode', name: 'ConsoleLogNode'})
-            .register({
-                dependency: '/processorTasks/TestClasses::TestRequestCancellationTaskNode',
-                name: 'TestRequestCancellationTaskNode'
+                resolutionName: '/:id/votes/:vote/voters.:format?|vote:remaining'
             })
             .register({
-                dependency: '/processorTasks/TestClasses::TestPredecessorToLoopTaskNode',
-                name: 'TestPredecessorToLoopTaskNode'
+                dependency: '/controllers/allVotersController',
+                name: 'votersController',
+                resolutionName: '/:id/votes/:vote/voters/:voter.:format?|vote:all'
             })
             .register({
-                dependency: '/processorTasks/TestClasses::TestSuccessorToLoopTaskNode',
-                name: 'TestSuccessorToLoopTaskNode'
-            })
-            .register({
-                dependency: '/processorTasks/TestClasses::TestCompensationToLoopTaskNode',
-                name: 'TestCompensationToLoopTaskNode'
+                dependency: '/controllers/remainingVotersController',
+                name: 'votersController',
+                resolutionName: '/:id/votes/:vote/voters/:voter.:format?|vote:remaining'
             });
     }
 

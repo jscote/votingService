@@ -12,15 +12,16 @@
         },
         types: [
             {
-                type: 'CustomerUpdate', pattern: 'topic',
+                type: 'VoteCreation', pattern: 'topic',
                 mapToProcessor: true
             },
             {
-                type: 'CustomerCreation', pattern: 'topic',
+                type: 'VoteDeletion', pattern: 'topic',
                 mapToProcessor: true
             },
-            {type: 'CustomerUpdated', pattern: 'fanout', listener: ''},
-            {type: 'CustomerCreated', pattern: 'fanout', listener: ''}
+            {type: 'VoteAdded', pattern: 'fanout', listener: ''},
+            {type: 'VoteDeleted', pattern: 'fanout', listener: ''},
+            {type: 'VoteRejected', pattern: 'fanout', listener: ''}
         ]
     };
 
