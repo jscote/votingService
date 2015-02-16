@@ -8,7 +8,10 @@
     module.exports = function(app) {
 
         app.resource('api', function () {
-            this.resource('examples');
+            this.resource('voters');
+            this.resource('votingDescriptorTypes', function() {
+                this.resource('voters');
+            });
         });
 
         // catch 404 and forward to error handler

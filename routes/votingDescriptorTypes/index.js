@@ -7,7 +7,7 @@
     'use strict';
 
     module.exports = (function sampleRouteHandler() {
-        var targetController = 'sampleController';
+        var targetController = 'votingDescriptorTypesController';
 
 
         var index = function (request, response) {
@@ -55,6 +55,6 @@
 
     })();
 })(
-        Injector.resolve({target: 'controllerResolver', resolutionName: 'sampleController'}),
+        Injector.resolve({target: 'controllerResolver', resolutionName: 'votingDescriptorTypesController'}),
         require(Injector.getBasePath() + '/routes/baseRoute')
     );
