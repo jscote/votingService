@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/serviceTemplate.iml" filepath="$PROJECT_DIR$/.idea/serviceTemplate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/votingService.iml" filepath="$PROJECT_DIR$/.idea/votingService.iml" />
     </modules>
   </component>
 </project>
