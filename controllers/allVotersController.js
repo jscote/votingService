@@ -5,7 +5,7 @@
  * Created by jscote on 10/20/13.
  */
 
-(function (util, base, Permission, PermissionAnnotation, noAuthAnnotation, permissionEnum, httpApiResponse, q, queue, _) {
+(function (util, base, Permission, PermissionAnnotation, noAuthAnnotation, permissionEnum, httpApiResponse, q, queue, _, ident) {
 
     'use strict';
 
@@ -36,66 +36,96 @@
     };
 
 
-    var processVote = function(messaging, request) {
+    var processVote = function (messaging, request) {
 
+        var dfd = q.defer();
         var msg = new messaging.ServiceMessage();
         var data = {};
         var response = msg.createServiceResponseFrom();
 
         //validate body of request
         var body = request.body;
-        if(_.isUndefined(body.voterId) || _.isNull(body.voterId)) {
+        if (_.isUndefined(body.voterId) || _.isNull(body.voterId)) {
             response.addError("a voter Id needs to be specified")
         }
 
-        if(_.isUndefined(body.votes) || _.isNull(body.votes) || !_.isArray(body.votes) || body.votes.length == 0) {
+        if (_.isUndefined(body.votes) || _.isNull(body.votes) || !_.isArray(body.votes) || body.votes.length == 0) {
             response.addError("votes should be specified");
         } else {
             var hasVotesError = false;
-            body.votes.forEach(function(item) {
-                if(_.isUndefined(item.votingDescriptorId) || _.isNull(item.votingDescriptorId)) {
+            body.votes.forEach(function (item) {
+                if (_.isUndefined(item.votingDescriptorId) || _.isNull(item.votingDescriptorId)) {
                     hasVotesError = true;
                 }
             });
 
-            if(hasVotesError) {
+            if (hasVotesError) {
                 response.addError("votes aren't properly defined. A voting descriptor id should be provided for each vote.");
             }
         }
 
 
-        if(response.hasErrors) {
-            return response;
+        if (response.hasErrors) {
+            dfd.resolve(response);
+            return;
         }
 
         data.voterId = body.voterId;
         data.votes = [];
-        body.votes.forEach(function(item) {
-            data.votes.push({votingDescriptorId: item.votingDescriptorId, voteId: 'need to get an id', voteTransactionDate: new Date()});
+        var promises = [];
+        body.votes.forEach(function (item) {
+            promises.push(ident.Identifiers.getNextId('vote'));
+            data.votes.push({
+                votingDescriptorId: item.votingDescriptorId,
+                voteTransactionDate: new Date()
+            });
         });
 
-        msg.data = data;
-        response.data = data;
+        q.all(promises).then(function (values) {
 
-        var queueResponse = queue.send('VoteCreation', msg);
+            for (var i = 0; i < values.length; i++) {
+                data.votes[i].voteId = values[i];
+            }
+
+            msg.data = data;
+            response.data = data;
+
+            var queueResponse = queue.send('VoteCreation', msg);
 
 
-        if(!queueResponse.isSuccess) {
-            queueResponse.errors.forEach(function(item) {
-                response.addError(item);
-            });
-        }
+            if (!queueResponse.isSuccess) {
+                queueResponse.errors.forEach(function (item) {
+                    response.addError(item);
+                });
+            }
 
-        return response;
+            dfd.resolve(response);
+        }).fail(function(error) {
+            dfd.reject(error);
+        });
+
+        return dfd.promise;
     };
 
-    AllVotersController.prototype.create = function(request) {
-        return processVote(this.messaging, request);
+    AllVotersController.prototype.create = function (request) {
+        var dfd = q.defer();
+        processVote(this.messaging, request).then(function (response) {
+            dfd.resolve(response)
+        }).fail(function (error) {
+            dfd.resolve(error);
+        });
+        return dfd.promise;
     };
     AllVotersController.prototype.create.annotations = [new httpApiResponse.HttpStatusCode(202)];
 
-    AllVotersController.prototype.update = function(request) {
-        return processVote(this.messaging, request);
+    AllVotersController.prototype.update = function (request) {
+        var dfd = q.defer();
+        processVote(this.messaging, request).then(function (response) {
+            dfd.resolve(response)
+        }).fail(function (error) {
+            dfd.resolve(error);
+        });
+        return dfd.promise;
     };
     AllVotersController.prototype.update.annotations = [new httpApiResponse.HttpStatusCode(202)];
 
@@ -110,6 +140,7 @@
     require(Injector.getBasePath() + '/helpers/httpApiResponse'),
     require('q'),
     require('jsai-queuing'),
-    require('lodash')
+    require('lodash'),
+    require('jsai-identifier')
 );
 

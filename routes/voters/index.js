@@ -23,6 +23,16 @@
 
         };
 
+        /*
+        Sample request body
+
+         {
+         "voterId" : "vtr-2",
+         "votes" : [{"votingDescriptorId" : "tim-1"}, {"votingDescriptorId" : "loc-1"}]
+         }
+
+         */
+
         var create = function (request, response) {
             var controller = controllerResolver.getController({targetController: targetController, parameters: request});
 

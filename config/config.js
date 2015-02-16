@@ -16,14 +16,17 @@
             //db
             dbhost: 'localhost',
             dbPort: 5432,
-            dbName:'loyally',
-            dbUserName:'postgres',
-            dbPassword:'postgres',
+            dbName: 'loyally',
+            dbUserName: 'postgres',
+            dbPassword: 'postgres',
             processorPath: path.join(rootPath, 'config/processorDefinition'),
             ruleSetPath: path.join(rootPath, 'config/ruleSetDefinition'),
             rulePath: path.join(rootPath, 'config/ruleDefinition'),
-            serviceMessage : {connectionConfiguration : {host: 'localhost:9200'}},
-            identifiers : {connectionConfiguration : {host: 'localhost:9200'}}
+            serviceMessage: {connectionConfiguration: {host: 'localhost:9200'}},
+            identifiers: {
+                connectionConfiguration: {host: 'localhost:9200'},
+                supportedTypes: [{supportedType: 'vote', abbreviation: 'vte'}]
+            }
         },
         production: {
             rootPath: rootPath,
@@ -32,9 +35,9 @@
             //db
             dbhost: 'localhost',
             dbPort: 5432,
-            dbName:'loyally',
-            dbUserName:'postgres',
-            dbPassword:'postgres',
+            dbName: 'loyally',
+            dbUserName: 'postgres',
+            dbPassword: 'postgres',
             processorPath: path.join(rootPath, 'config/processorDefinition'),
             ruleSetPath: path.join(rootPath, 'config/ruleSetDefinition'),
             rulePath: path.join(rootPath, 'config/ruleDefinition')
