@@ -129,6 +129,14 @@
     };
     AllVotersController.prototype.update.annotations = [new httpApiResponse.HttpStatusCode(202)];
 
+    AllVotersController.prototype.destroy = function (request) {
+        var dfd = q.defer();
+
+        dfd.resolve({someData : 'Removed votes'});
+        return dfd.promise;
+    };
+    AllVotersController.prototype.destroy.annotations = [new httpApiResponse.HttpStatusCode(202)];
+
     module.exports = AllVotersController;
 
 })(require('util'),

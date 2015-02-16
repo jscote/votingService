@@ -36,18 +36,6 @@
         return dfd.promise;
     };
 
-
-
-    RemainingVotersController.prototype.create = function(request) {
-
-    };
-    RemainingVotersController.prototype.create.annotations = [new httpApiResponse.HttpStatusCode(202)];
-
-    RemainingVotersController.prototype.update = function(request) {
-
-    };
-    RemainingVotersController.prototype.update.annotations = [new httpApiResponse.HttpStatusCode(202)];
-
     module.exports = RemainingVotersController;
 
 })(require('util'),

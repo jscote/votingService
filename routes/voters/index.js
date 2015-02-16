@@ -12,7 +12,7 @@
         var get = function (request, response) {
             var controller = controllerResolver.getController({targetController: targetController, parameters: request});
 
-            if(controller == undefined) {
+            if(controller == undefined || controller == null || controller.get == undefined) {
                 response.send("405", {error: "This type of request is not supported for the requested resource"});
                 return;
             }
@@ -36,7 +36,7 @@
         var create = function (request, response) {
             var controller = controllerResolver.getController({targetController: targetController, parameters: request});
 
-            if(controller == undefined) {
+            if(controller == undefined || controller == null || controller.create == undefined) {
                 response.send("405", {error: "This type of request is not supported for the requested resource"});
                 return;
             }
@@ -50,7 +50,7 @@
         var update = function (request, response) {
             var controller = controllerResolver.getController({targetController: targetController, parameters: request});
 
-            if(controller == undefined) {
+            if(controller == undefined || controller == null|| controller.create == undefined) {
                 response.send("405", {error: "This type of request is not supported for the requested resource"});
                 return;
             }
@@ -61,10 +61,25 @@
 
         };
 
+        var destroy = function (request, response) {
+            var controller = controllerResolver.getController({targetController: targetController, parameters: request});
+
+            if(controller == undefined || controller == null|| controller.create == undefined) {
+                response.send("405", {error: "This type of request is not supported for the requested resource"});
+                return;
+            }
+
+            controller.destroy(request).then(function (result) {
+                response.status(result.statusCode).send(result.data);
+            });
+
+        };
+
         return baseRoute.createRoutes({
             show: get,
             create: create,
-            update: update
+            update: update,
+            destroy: destroy
         });
 
     })();
