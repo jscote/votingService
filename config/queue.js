@@ -12,11 +12,11 @@
         },
         types: [
             {
-                type: 'VoteCreation', pattern: 'topic',
+                type: 'voteCreation', pattern: 'topic',
                 mapToProcessor: true
             },
             {
-                type: 'VoteDeletion', pattern: 'topic',
+                type: 'voteDeletion', pattern: 'topic',
                 mapToProcessor: true
             },
             {type: 'VoteAdded', pattern: 'fanout', listener: ''},

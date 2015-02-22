@@ -5,7 +5,7 @@
 
     module.exports = {
         version: '0.1.1',
-        processorName: 'VoteCreation',
+        processorName: 'voteCreation',
         nodeType: 'CompensatedNode',
         parameters: {
             compensationNode: {nodeType: 'NoOpTaskNode'},

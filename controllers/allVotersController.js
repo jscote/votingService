@@ -90,7 +90,7 @@
             msg.data = data;
             response.data = data;
 
-            var queueResponse = queue.send('VoteCreation', msg);
+            var queueResponse = queue.send('voteCreation', msg);
 
 
             if (!queueResponse.isSuccess) {
