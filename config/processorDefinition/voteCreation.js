@@ -10,7 +10,12 @@
         parameters: {
             compensationNode: {nodeType: 'NoOpTaskNode'},
             startNode: {
-                nodeType: 'NoOpTaskNode'
+                nodeType: 'ValidateVoter',
+                parameters: {
+                    successor: {
+                        nodeType: 'ValidateVotingItems'
+                    }
+                }
             }
         }
     };

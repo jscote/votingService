@@ -6,7 +6,7 @@
     'use strict';
 
     module.exports = {
-        schedules: [
+        schedules: [] /*[
             {
                 interval: 30000,
                 processorName: 'intervalProcessor',
@@ -17,7 +17,7 @@
                 processorName: 'intervalProcessor',
                 alias: 'intervalProcessor2'
             },
-        ]
+        ]*/
     };
 
 })();

@@ -42,7 +42,10 @@
                 dependency: '/controllers/remainingVotersController',
                 name: 'votersController',
                 resolutionName: '/:id/votes/:vote/voters/:voter.:format?|vote:remaining'
-            });
+            })
+
+            .register({dependency: '/processorTasks/ValidateVoter', name: 'ValidateVoter'})
+            .register({dependency: '/processorTasks/ValidateVotingItems', name: 'ValidateVotingItems'});
     }
 
 })();
