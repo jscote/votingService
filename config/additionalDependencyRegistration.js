@@ -45,6 +45,11 @@
             })
 
             .register({dependency: '/processorTasks/ValidateVoter', name: 'ValidateVoter'})
+            .register({dependency: '/processorTasks/AddVoteToWaitingList', name: 'AddVoteToWaitingList'})
+            .register({dependency: '/processorTasks/PersistRejectedVote', name: 'PersistRejectedVote'})
+            .register({dependency: '/processorTasks/RaiseRejectedVote', name: 'RaiseRejectedVote'})
+            .register({dependency: '/processorTasks/PersistAddedVote', name: 'PersistAddedVote'})
+            .register({dependency: '/processorTasks/RaiseAddedVote', name: 'RaiseAddedVote'})
             .register({dependency: '/processorTasks/ValidateVotingItems', name: 'ValidateVotingItems'});
     }
 

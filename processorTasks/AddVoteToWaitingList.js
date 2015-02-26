@@ -4,19 +4,19 @@
 (function(_, q, util, base){
     'use strict';
 
-    function ValidateVotingItems(serviceMessage) {
+    function AddVoterToWaitingList(serviceMessage) {
         base.TaskNode.call(this, serviceMessage);
-        this.name = 'ValidateVotingItems';
+        this.name = 'AddVoterToWaitingList';
     }
 
-    util.inherits(ValidateVotingItems, base.TaskNode);
+    util.inherits(AddVoterToWaitingList, base.TaskNode);
 
-    ValidateVotingItems.prototype.handleRequest = function (context) {
+    AddVoterToWaitingList.prototype.handleRequest = function (context) {
         var dfd = q.defer();
         var self = this;
 
         process.nextTick(function () {
-            console.log("ValidateVotingItems iteration: " + context.currentIteration.voteId);
+            console.log("AddVoteToWaitingList");
             dfd.resolve(context);
         });
 
@@ -25,7 +25,7 @@
 
     };
 
-    module.exports = ValidateVotingItems;
+    module.exports = AddVoterToWaitingList;
 
 
 })(

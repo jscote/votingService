@@ -4,19 +4,19 @@
 (function(_, q, util, base){
     'use strict';
 
-    function ValidateVotingItems(serviceMessage) {
+    function RaiseRejectedVote(serviceMessage) {
         base.TaskNode.call(this, serviceMessage);
-        this.name = 'ValidateVotingItems';
+        this.name = 'RaiseRejectedVote';
     }
 
-    util.inherits(ValidateVotingItems, base.TaskNode);
+    util.inherits(RaiseRejectedVote, base.TaskNode);
 
-    ValidateVotingItems.prototype.handleRequest = function (context) {
+    RaiseRejectedVote.prototype.handleRequest = function (context) {
         var dfd = q.defer();
         var self = this;
 
         process.nextTick(function () {
-            console.log("ValidateVotingItems iteration: " + context.currentIteration.voteId);
+            console.log("RaiseRejectedVote");
             dfd.resolve(context);
         });
 
@@ -25,7 +25,7 @@
 
     };
 
-    module.exports = ValidateVotingItems;
+    module.exports = RaiseRejectedVote;
 
 
 })(
