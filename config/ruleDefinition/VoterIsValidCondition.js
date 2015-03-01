@@ -5,8 +5,17 @@
     var fCondition = function(evalContext) {
         var dfd = q.defer();
 
-        process.nextTick(function(){
-            dfd.resolve({isTrue : true});
+        var provider = Injector.resolve({target: 'voterProvider'});
+        var id = evalContext.fact.request.data.voterId;
+
+        provider.getVoterById(id).then(function(result){
+            if(result === null) {
+                dfd.resolve({isTrue : false});
+            } else {
+                dfd.resolve({isTrue : true});
+            }
+        }).fail(function(error) {
+            dfd.resolve({isTrue : false});
         });
 
         return dfd.promise;

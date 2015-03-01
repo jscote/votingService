@@ -50,7 +50,13 @@
             .register({dependency: '/processorTasks/RaiseRejectedVote', name: 'RaiseRejectedVote'})
             .register({dependency: '/processorTasks/PersistAddedVote', name: 'PersistAddedVote'})
             .register({dependency: '/processorTasks/RaiseAddedVote', name: 'RaiseAddedVote'})
-            .register({dependency: '/processorTasks/ValidateVotingItems', name: 'ValidateVotingItems'});
+            .register({dependency: '/processorTasks/ValidateVotingItems', name: 'ValidateVotingItems'})
+
+            .register({dependency: '/domainObjects/providers/voterProvider', name: 'voterProvider'})
+            .register({dependency: '/domainObjects/repositories/voterRepository', name: 'voterRepository'})
+
+
+        ;
     }
 
 })();

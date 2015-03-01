@@ -25,7 +25,10 @@
             serviceMessage: {connectionConfiguration: {host: 'localhost:9200'}},
             identifiers: {
                 connectionConfiguration: {host: 'localhost:9200'},
-                supportedTypes: [{supportedType: 'vote', abbreviation: 'vte'}]
+                supportedTypes: [{supportedType: 'vote', abbreviation: 'vte'}, {supportedType: 'voter', abbreviation: 'vtr'}]
+            },
+            voterConnection: {
+                connectionConfiguration: {host: 'localhost:9200'}
             }
         },
         production: {
