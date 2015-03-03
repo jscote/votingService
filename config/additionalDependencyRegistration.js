@@ -55,6 +55,11 @@
             .register({dependency: '/domainObjects/providers/voterProvider', name: 'voterProvider'})
             .register({dependency: '/domainObjects/repositories/voterRepository', name: 'voterRepository'})
 
+            .register({dependency: '/domainObjects/providers/votingCombinationProvider', name: 'votingCombinationProvider'})
+            .register({dependency: '/domainObjects/repositories/votingCombinationRepository', name: 'votingCombinationRepository'})
+
+            .register({dependency: '/domainObjects/providers/votingHierarchyProvider', name: 'votingHierarchyProvider'})
+            .register({dependency: '/domainObjects/repositories/votingHierarchyRepository', name: 'votingHierarchyRepository'})
 
         ;
     }
