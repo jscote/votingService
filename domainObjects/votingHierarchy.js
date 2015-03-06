@@ -7,7 +7,8 @@
 
         entity.call(this);
 
-        var _votingHierarchyId = parameters.votingHierarchyId || null;
+        var _votingHierarchyId;
+        var _description;
 
         Object.defineProperty(this, 'votingHierarchyId', {
             enumerable: true, get: function () {
@@ -15,7 +16,6 @@
             }
         });
 
-        var _description = parameters.description || null;
 
         Object.defineProperty(this, 'description', {
             enumerable: true, get: function () {
@@ -26,85 +26,99 @@
         var _levels = [];
 
 
-        this.setBasicInfo = function (votingHierarchyId, description) {
-            _votingHierarchyId = votingHierarchyId || _votingHierarchyId;
-            _description = description || _description;
+        this.setBasicInfo = function (params) {
+
+            if (!_.isString(params.votingHierarchyId) || _.isEmpty(params.votingHierarchyId))
+                throw Error("Voting HierarchyId should be a valid string");
+
+            if (!_.isString(params.description) || _.isEmpty(params.description))
+                throw Error("Voting HierarchyId should be a valid string");
+
+            _votingHierarchyId = params.votingHierarchyId || _votingHierarchyId;
+            _description = params.description || _description;
 
             this.state = entity.EntityState.modified;
         };
 
-        this.addLevel = function (level, parentLevel, descriptor, isVotable, acceptEligibleVoters) {
-            if (!_.isFinite(level)) {
+        this.addLevel = function (addParams) {
+            if (!_.isFinite(addParams.level)) {
                 throw Error("level is not a valid integer");
             }
 
-            if (!(_.isNull(parentLevel)) && !(_.isFinite(parentLevel))) {
+            if (!(_.isNull(addParams.parentLevel)) && !(_.isFinite(addParams.parentLevel))) {
                 throw Error("parentLevel is not a valid integer");
             }
 
-            isVotable = isVotable || false;
-            acceptEligibleVoters = acceptEligibleVoters || false;
-            descriptor = descriptor || null;
+            addParams.isVotable = addParams.isVotable || false;
+            addParams.acceptEligibleVoters = addParams.acceptEligibleVoters || false;
+            addParams.descriptor = addParams.descriptor || null;
 
-            if (!_.isBoolean(isVotable)) {
+            if (!_.isBoolean(addParams.isVotable)) {
                 throw Error("isVotable is not a valid boolean");
             }
 
-            if (!_.isBoolean(acceptEligibleVoters)) {
+            if (!_.isBoolean(addParams.acceptEligibleVoters)) {
                 throw Error("AcceptEligibleVoters is not a valid boolean");
             }
 
-            if(!_.isNull(descriptor) && !_.isString(descriptor)) {
+            if (_.isNull(addParams.descriptor) || !_.isString(addParams.descriptor) || _.isEmpty(addParams.descriptor)) {
                 throw Error("Descriptor is not a valid string");
             }
 
             var exists = _.filter(_levels, _.matches({
-                    level: level,
-                    parentLevel: parentLevel,
-                    descriptor: descriptor
+                    level: addParams.level,
+                    parentLevel: addParams.parentLevel,
+                    descriptor: addParams.descriptor
                 })).length > 0;
 
-            if(exists) {
+            if (exists) {
                 return;
             }
 
             _levels.push({
-                level: level,
-                parentLevel: parentLevel,
-                descriptor: descriptor,
-                isVotable: isVotable,
-                acceptEligibleVoters: acceptEligibleVoters
+                level: addParams.level,
+                parentLevel: addParams.parentLevel,
+                descriptor: addParams.descriptor,
+                isVotable: addParams.isVotable,
+                acceptEligibleVoters: addParams.acceptEligibleVoters
             });
-        }
+        };
 
-        this.getLevels = function(level, parentLevel, descriptor, isVotable, acceptEligibleVoters) {
+        this.getLevels = function (queryParams) {
             var query = {};
 
-            if (_.isFinite(level)) {
-                query.level = level;
+            if (_.isUndefined(queryParams))
+                return _levels;
+
+            if (_.isFinite(queryParams.level)) {
+                query.level = queryParams.level;
             }
 
-            if (!(_.isNull(parentLevel)) && (_.isFinite(parentLevel))) {
-                query.parentLevel = parentLevel;
+            if (!(_.isNull(queryParams.parentLevel)) && (_.isFinite(queryParams.parentLevel))) {
+                query.parentLevel = queryParams.parentLevel;
             }
 
-            descriptor = descriptor || null;
+            queryParams.descriptor = queryParams.descriptor || null;
 
-            if (_.isBoolean(isVotable)) {
-                query.isVotable = isVotable;
+            if (_.isBoolean(queryParams.isVotable)) {
+                query.isVotable = queryParams.isVotable;
             }
 
-            if (_.isBoolean(acceptEligibleVoters)) {
-                query.acceptEligibleVoters = acceptEligibleVoters;
+            if (_.isBoolean(queryParams.acceptEligibleVoters)) {
+                query.acceptEligibleVoters = queryParams.acceptEligibleVoters;
             }
 
-            if(!_.isNull(descriptor) && _.isString(descriptor)) {
-                query.descriptor = descriptor;
+            if (!_.isNull(queryParams.descriptor) && _.isString(queryParams.descriptor)) {
+                query.descriptor = queryParams.descriptor;
             }
 
             return _.filter(_levels, _.matches(query));
 
-        }
+        };
+
+        this.setBasicInfo(parameters);
+
+        return this;
 
     };
 
