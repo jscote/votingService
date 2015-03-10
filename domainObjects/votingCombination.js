@@ -73,6 +73,8 @@
                 votingDescriptorId: addParams.votingDescriptorId,
                 isVotingLocked: addParams.isVotingLocked
             });
+
+            this.state = entity.EntityState.modified;
         };
 
         this.getVotingDescriptors = function(queryParams) {

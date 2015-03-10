@@ -1,4 +1,4 @@
-(function (DomainObject, Entity) {
+(function (DomainObject, Entity, q, _) {
     'use strict';
 
     module.exports = function (votingCombinationRepository) {
@@ -6,11 +6,26 @@
         var _repository = votingCombinationRepository;
 
         this.getVotingCombinationById = function (id) {
-            return _repository.getVotingCombinationById(id);
-        };
+            var dfd = q.defer();
+
+            _repository.getVotingCombinationById(id).then(function(entity){
+                dfd.resolve(entity);
+            }).fail(function(error) {
+                dfd.reject(error);
+            });
+
+            return dfd.promise;        };
 
         this.getVotingCombinationByVotingDescriptorId = function (votingDescriptorId) {
-            return _repository.getVotingCombinationByVotingDescriptorId(votingDescriptorId);
+            var dfd = q.defer();
+
+            _repository.getVotingCombinationByVotingDescriptorId(votingDescriptorId).then(function(entities){
+                dfd.resolve(entities);
+            }).fail(function(error) {
+                dfd.reject(error);
+            });
+
+            return dfd.promise;
         };
 
         this.create = function (parameters) {
@@ -22,4 +37,4 @@
 
     };
 
-})(require(Injector.getBasePath() + '/domainObjects/votingCombination'), require(Injector.getBasePath() + '/domainObjects/entity'));
+})(require(Injector.getBasePath() + '/domainObjects/votingCombination'), require(Injector.getBasePath() + '/domainObjects/entity'), require('q'), require('lodash'));

@@ -1,4 +1,4 @@
-(function (DomainObject, Entity) {
+(function (DomainObject, Entity, q) {
     'use strict';
 
     module.exports = function (votingHierarchyRepository) {
@@ -6,7 +6,14 @@
         var _repository = votingHierarchyRepository;
 
         this.getVotingHierarchyById = function (id) {
-            return _repository.getVotingHierarchyById(id);
+            var dfd = q.defer();
+            _repository.getVotingHierarchyById(id).then(function(entity) {
+                dfd.resolve(entity);
+            }).fail(function(error){
+                dfd.reject(error);
+            });
+
+            return dfd.promise;
         };
 
         this.create = function (parameters) {
@@ -18,4 +25,8 @@
 
     };
 
-})(require(Injector.getBasePath() + '/domainObjects/votingHierarchy'), require(Injector.getBasePath() + '/domainObjects/entity'));
+})(
+    require(Injector.getBasePath() + '/domainObjects/votingHierarchy'),
+    require(Injector.getBasePath() + '/domainObjects/entity'),
+    require('q')
+);

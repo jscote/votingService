@@ -1,4 +1,4 @@
-(function (q, es, DomainObject, identifier) {
+(function (q, es, Entity, DomainObject) {
     'use strict';
 
     //Configure environment
@@ -30,16 +30,33 @@
             id: id
         }).then(function (result) {
             if (result != null) {
-                //TODO populate the domain object based on result
-                var entity = new DomainObject();
-                entity.addLevel();
+                var row = result._source;
+                var entity = new DomainObject({
+                    votingCombinationId: result._id,
+                    votingHierarchyId: row.votingHierarchyId
+                });
+
+                row.votingDescriptors.forEach(function (item) {
+                    entity.addVotingDescriptor({
+                        votingDescriptorId: item.votingDescriptorId,
+                        isVotingLocked: item.isVotingLocked,
+                        level: item.level
+                    });
+                });
+
+                entity.state = Entity.EntityState.unchanged;
+
                 dfd.resolve(entity);
-                return;
+            } else {
+                dfd.resolve(null);
             }
-            dfd.reject("Id doesn't exist for voting hierarchy");
         }).catch(function (error) {
-            console.log(error);
-            dfd.reject(error);
+            if(error.status == 404) {
+                dfd.resolve(null);
+            } else {
+                console.log(error);
+                dfd.reject(error);
+            }
         }).finally(function () {
             client.close();
         });
@@ -72,12 +89,23 @@
         client.search({
             index: 'votes',
             type: 'votingCombination',
-            id: msg.id,
             body: body
         }).then(function (result) {
-            for (var i = 0; i < result.hits.hits.length; i) {
+            for (var i = 0; i < result.hits.hits.length; i++) {
                 var row = result.hits.hits[i]._source;
-                var entity = new DomainObject({id: row.id});
+                var entity = new DomainObject({
+                    votingCombinationId: result.hits.hits[i]._id,
+                    votingHierarchyId: row.votingHierarchyId
+                });
+
+                row.votingDescriptors.forEach(function (item) {
+                    entity.addVotingDescriptor({
+                        votingDescriptorId: item.votingDescriptorId,
+                        isVotingLocked: item.isVotingLocked,
+                        level: item.level
+                    });
+                });
+
                 entity.state = Entity.EntityState.unchanged;
                 entityList.push(entity);
             }
@@ -96,4 +124,9 @@
 
 
     module.exports = Repository;
-})(require('q'), require('elasticsearch'), require(Injector.getBasePath() + 'domainObjects/voter'), require('jsai-identifier').Identifiers);
+})(
+    require('q'),
+    require('elasticsearch'),
+    require(Injector.getBasePath() + 'domainObjects/entity'),
+    require(Injector.getBasePath() + 'domainObjects/votingCombination')
+);

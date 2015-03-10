@@ -1,4 +1,4 @@
-(function (q, es, DomainObject, identifier) {
+(function (q, es, Entity, DomainObject) {
     'use strict';
 
     //Configure environment
@@ -29,26 +29,48 @@
             type: 'votingHierarchy',
             id: id
         }).then(function (result) {
-            if(result != null) {
-                //TODO populate the domain object based on result
-                var entity = new DomainObject();
-                entity.addLevel();
+            if (result != null) {
+                var row = result._source;
+                var entity = new DomainObject({
+                    votingHierarchyId: result._id,
+                    description: row.description
+                });
+
+                row.levels.forEach(function (item) {
+                    entity.addLevel({
+                        level: item.level,
+                        parentLevel: item.parentLevel,
+                        descriptor: item.descriptor,
+                        isVotable: item.isVotable,
+                        acceptEligibleVoters: item.acceptEligibleVoters
+                    });
+                });
+
+                entity.state = Entity.EntityState.unchanged;
+
                 dfd.resolve(entity);
-                return;
+            } else {
+                dfd.resolve(null);
             }
-            dfd.reject("Id doesn't exist for voting hierarchy");
         }).catch(function (error) {
-            console.log(error);
-            dfd.reject(error);
-        }).finally(function() {
+            if(error.status == 404) {
+                dfd.resolve(null);
+            } else {
+                console.log(error);
+                dfd.reject(error);
+            }
+        }).finally(function () {
             client.close();
         });
 
         return dfd.promise;
-
-
     };
 
 
     module.exports = Repository;
-})(require('q'), require('elasticsearch'), require(Injector.getBasePath() + 'domainObjects/voter'), require('jsai-identifier').Identifiers);
+})(
+    require('q'),
+    require('elasticsearch'),
+    require(Injector.getBasePath() + 'domainObjects/entity'),
+    require(Injector.getBasePath() + 'domainObjects/votingHierarchy')
+);

@@ -82,6 +82,8 @@
                 isVotable: addParams.isVotable,
                 acceptEligibleVoters: addParams.acceptEligibleVoters
             });
+
+            this.state = entity.EntityState.modified;
         };
 
         this.getLevels = function (queryParams) {

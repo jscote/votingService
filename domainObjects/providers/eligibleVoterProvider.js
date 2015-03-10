@@ -1,9 +1,11 @@
-(function (DomainObject, Entity) {
+(function (DomainObject, Entity, q, _) {
     'use strict';
 
-    module.exports = function (eligibleVoterRepository) {
+    module.exports = function (eligibleVoterRepository, votingCombinationProvider, votingHierarchyProvider) {
 
         var _repository = eligibleVoterRepository;
+        var _votingCombinationProvider = votingCombinationProvider;
+        var _votingHierarchyProvider = votingHierarchyProvider;
 
         this.getEligibleVoterById = function (id) {
             return _repository.getEligibleVoterById(id);
@@ -16,17 +18,23 @@
         this.getEligibleVotersByVotingDescriptorId = function (votingDescriptorId) {
 
             /*
-            Logic:
-            - Get VotingDescriptorId from votingCombination - If not present, then the votingDescriptorId won't have eligible voters
-                - Determine which level and which hierarchy the voting descriptor belongs to
-            - Get Hierarchy/Order level that accepts eligible voters from votingHierarchy where hierarchy and order are matching the previous step
-                - Get votingDescriptorId at the level that matches where eligible voters are accepted by combining result from the first two steps
-                - As a child votingDescriptorId should only have one parent, we should get only one votingDescriptorId
-            - Get voterIds from eligible voters where the votingDescriptorId matches the one from previous step
+             Logic:
+             - Get VotingDescriptorId from votingCombination - If not present, then the votingDescriptorId won't have eligible voters
+             - Determine which level and which hierarchy the voting descriptor belongs to
+             - Get Hierarchy/Order level that accepts eligible voters from votingHierarchy where hierarchy and order are matching the previous step
+             - Get votingDescriptorId at the level that matches where eligible voters are accepted by combining result from the first two steps
+             - As a child votingDescriptorId should only have one parent, we should get only one votingDescriptorId
+             - Get voterIds from eligible voters where the votingDescriptorId matches the one from previous step
 
              */
 
-            return _repository.getEligibleVotersByVotingDescriptorId(votingDescriptorId);
+            var dfd = q.defer();
+
+            _votingCombinationProvider.getVotingCombinationByVotingDescriptorId(votingDescriptorId).then(function (combinations) {
+
+            });
+
+            return dfd.promise;
         };
 
         this.create = function (parameters) {
@@ -38,4 +46,4 @@
 
     };
 
-})(require(Injector.getBasePath() + '/domainObjects/eligibleVoter'), require(Injector.getBasePath() + '/domainObjects/entity'));
+})(require(Injector.getBasePath() + '/domainObjects/eligibleVoter'), require(Injector.getBasePath() + '/domainObjects/entity'), require('q'), require('lodash'));
